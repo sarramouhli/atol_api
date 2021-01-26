@@ -1,0 +1,19 @@
+version: "3"
+services:
+       atol-node-api:
+           container_name: atol-api-container
+           image: sarramouhligh/atol-product-api
+           restart: always
+           build: .
+           ports:
+             - "4000:4000"
+           links:
+             - mongo
+       mongo:
+             container_name: atol-mongo
+             image: mongo
+             volumes:
+               - ./init-production.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+               - ./mongo-volume:/data/db
+             ports:
+               - '27017:27017'
